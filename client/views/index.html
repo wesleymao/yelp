@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html ng-app="restMapApp" ng-init="
+	legendsAmerica=[{'color':'#fe3e64', 'name':'American'}, 
+			{'color':'#eb4847', 'name':'Southern'},
+			{'color':'#d73765', 'name':'Mexican'},
+			{'color':'#c83f69', 'name':'Cajun'},
+			{'color':'#e03e9c', 'name':'Latin_American'},
+			{'color':'#dda0f6', 'name':'Peruvian'},
+			{'color':'#8058bd', 'name':'Cuban'},
+			{'color':'#8e7de5', 'name':'Caribbean'},
+			{'color':'#6c7ae0', 'name':'Hawaiian'}];
+
+	legendsAsia=[{'color':'#4272d7', 'name':'Asian'},
+			{'color':'#2489b0', 'name':'Korean'},
+			{'color':'#00b5e9', 'name':'Japanese'},
+			{'color':'#4ec8f7', 'name':'Chinese'},
+			{'color':'#46d9f9', 'name':'Thai'},
+			{'color':'#28cacc', 'name':'Vietnamese'},
+			{'color':'#62d8b6', 'name':'Malaysian'},
+			{'color':'#00b26f', 'name':'Indian'}];
+
+	legendsMEastern=[
+			{'color':'#63c76a', 'name':'Middle_Eastern'},
+			{'color':'#57b846', 'name':'Afghan'},
+			{'color':'#83d160', 'name':'Cambodian'},
+			{'color':'#c2e254', 'name':'Pakistani'}];
+
+	legendsEurope=[
+			{'color':'#ffe048', 'name':'Russian'},
+			{'color':'#ffd84f', 'name':'German'},
+			{'color':'#faca57', 'name':'Polish'},
+			{'color':'#ffd965', 'name':'French'},
+			{'color':'#ffa037', 'name':'Italian'},
+			{'color':'#e98c38', 'name':'Spanish'},
+			{'color':'#875546', 'name':'Greek'},
+			{'color':'#ff8e50', 'name':'British'},
+			{'color':'#ff9584', 'name':'Irish'}];
+
+	legendsMed=[
+			{'color':'#955542', 'name':'Mediterranean'},
+			{'color':'#b45b3e', 'name':'Moroccan'},
+			{'color':'#e45d27', 'name':'African'},
+			{'color':'#ff5f3d', 'name':'Ethiopian'}]">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+		<style>
+			.graph{
+				position:absolute;
+				top:200px;
+			}
+			.fade {
+				-webkit-transition:1s;
+			}
+			.fade.ng-enter {
+				opacity: 0;
+			}
+
+			.fade.ng-enter.ng-enter-active {
+				opacity: 1;
+			}
+
+			.fade.ng-leave{
+				opacity: 1;
+			}
+
+			.fade.ng-leave.ng-leave-active{
+				opacity: 0;
+			}
+			.option {
+				position:absolute;
+				top:200px;
+				left:500px;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- restMapApp View -->
+		<div  ng-controller = "restMapController" class="fade">
+			<h1>{{rests.length}} Restaurents in {{rests[0].city}}, {{rests[0].state}}</h1>
+
+			<div style="top:70px; position:absolute">
+				<table>
+					<tr>
+						<td ng-repeat="legend in legendsAmerica">
+							<table>
+								<tr>
+									<td style="background:{{legend.color}}; width:10px; height:10px">
+									</td>
+									<td>
+										{{legend.name}}
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td ng-repeat="legend in legendsAsia">
+							<table>
+								<tr>
+									<td style="background:{{legend.color}}; width:10px; height:10px">
+									</td>
+									<td>
+										{{legend.name}}
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td ng-repeat="legend in legendsMEastern">
+							<table>
+								<tr>
+									<td style="background:{{legend.color}}; width:10px; height:10px">
+									</td>
+									<td>
+										{{legend.name}}
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td ng-repeat="legend in legendsEurope">
+							<table>
+								<tr>
+									<td style="background:{{legend.color}}; width:10px; height:10px">
+									</td>
+									<td>
+										{{legend.name}}
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td ng-repeat="legend in legendsMed">
+							<table>
+								<tr>
+									<td style="background:{{legend.color}}; width:10px; height:10px">
+									</td>
+									<td>
+										{{legend.name}}
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>	
+			</div>
+			<div>
+			<table>
+				<tr>
+					<td style="width:1024px;">
+						<div class="graph">
+							<svg></svg>
+						</div>
+					</td>
+					<td>
+						<form ng-submit="getCity()">
+							<select ng-model="cityName">
+								<option value="Peoria">Peoria</option>
+								<option value="Scottsdale">Scottsdale</option>
+								<option value="Phoenix">Phoenix</option>
+							</select>
+							<button type="submit">Submit</button>
+						</form>
+					</td>
+				</tr>
+			</table>
+			</div>
+		</div>
+		
+	<script src="http://d3js.org/d3.v2.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-resource.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-animate.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
+	<script type="text/javascript" src="/js/controllers/restMap-controller.js"></script>
+	<script type="text/javascript" src="/js/controllers/legend-controller.js"></script>
+	</body>
+</html>
